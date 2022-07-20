@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Production
+build/
+dist/
+
+# TypeScript
+tsbuildinfo/
+
+# Jest (ESLint rules don't agree with how these configs are written)
+jest.config.js
+
+# webpack (ESLint rules don't agree with how these configs are written)
+webpack.config.*.js
+webpack/
+
+# github
+.github/
+
+# public
+public/
+
+# Styles
+styles/
+
+# config files
+*.js
+
+*.d.ts
+package.json
+
+scripts/verify-version-replacement.js
