@@ -5,17 +5,22 @@ import { MEMORY_CARD_LIST } from './cardList'
 import { CardDetails } from './type'
 
 const App: FC = () => {
-    const [cardList, setCardList] = useState<CardDetails[]>(MEMORY_CARD_LIST)
+    const [cardList, setCardList] = useState<CardDetails[]>([])
     const [activeCards, setActiveCards] = useState<string[]>([])
-    const [userPoint, setUserPoint] = useState<number>(0)
-    const [userChances, setUserChances] = useState<number>(10)
+    const [playerName, setPlayerName] = useState<string>('Ashish')
+    const [userScore, setUserScore] = useState<number>(0)
+    const [remaningUserChances, setRemaningUserChances] = useState<number>(10)
 
     const updateData = (matched: boolean, newList: CardDetails[]): void => {
         setActiveCards([])
         setCardList(newList)
-        setUserChances((prev) => prev - 1)
-        matched && setUserPoint((prev) => prev + 1)
+        setRemaningUserChances((prev) => prev - 1)
+        matched && setUserScore((prev) => prev + 1)
     }
+
+    useEffect(() => {
+        setCardList([...MEMORY_CARD_LIST].sort(() => 0.5 - Math.random()))
+    }, [])
 
     useEffect(() => {
         if (activeCards.length === 2) {
@@ -37,31 +42,47 @@ const App: FC = () => {
         }
     }, [activeCards, cardList])
 
-    const changeCardVisibility = (id: number, image: string): void => {
+    const changeCardVisibility = (
+        selectedIndex: number,
+        image: string
+    ): void => {
+        const a = [...cardList]
+        a[selectedIndex].active = true
+        setCardList(a)
         setActiveCards((prev) => [...prev, image])
-        setCardList(
-            [...cardList].map((card) => {
-                if (card.id === id) {
-                    card.active = true
-                }
-
-                return card
-            })
-        )
     }
 
     return (
         <div className="App">
-            <h1>Chance Remaning : {userChances} </h1>
-            <h1>User Point : {userPoint} </h1>
-            {userChances === 0 ? <h2>Game is over</h2> : ''}
-            {cardList.map((list, index) => (
-                <Card
-                    changeCardVisibility={changeCardVisibility}
-                    data={list}
-                    key={index}
-                />
-            ))}
+            <div className="header">
+                <div className="player">
+                    <h1>Player : </h1>
+                    <h2>{playerName}</h2>
+                </div>
+
+                <div className="score">
+                    <h1>Score : </h1>
+                    <h2>{userScore}</h2>
+                </div>
+
+                <div className="chances">
+                    <h1>Remaning Chances : </h1>
+                    <h2>{remaningUserChances}</h2>
+                </div>
+            </div>
+
+            <div className="card-body-container">
+                <div className="card-container">
+                    {cardList.map((list, index) => (
+                        <Card
+                            changeCardVisibility={changeCardVisibility}
+                            data={list}
+                            index={index}
+                            key={index}
+                        />
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }
