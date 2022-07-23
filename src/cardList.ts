@@ -1,37 +1,61 @@
 export const MEMORY_CARD_LIST = [
     {
-        id: 1,
-        image: 'd',
+        image: process.env.PUBLIC_URL + '/images/apple.jpg',
         active: false,
         matched: false,
     },
     {
-        id: 2,
-        image: 'b',
+        image: process.env.PUBLIC_URL + '/images/cheery.jpg',
         active: false,
         matched: false,
     },
     {
-        id: 3,
-        image: 'd',
+        image: process.env.PUBLIC_URL + '/images/dragon.jpg',
         active: false,
         matched: false,
     },
     {
-        id: 4,
-        image: 'c',
+        image: process.env.PUBLIC_URL + '/images/mango.jpg',
         active: false,
         matched: false,
     },
     {
-        id: 5,
-        image: 'b',
+        image: process.env.PUBLIC_URL + '/images/orange.jpg',
         active: false,
         matched: false,
     },
     {
-        id: 6,
-        image: 'c',
+        image: process.env.PUBLIC_URL + '/images/pineapple.jpg',
+        active: false,
+        matched: false,
+    },
+    {
+        image: process.env.PUBLIC_URL + '/images/apple.jpg',
+        active: false,
+        matched: false,
+    },
+    {
+        image: process.env.PUBLIC_URL + '/images/cheery.jpg',
+        active: false,
+        matched: false,
+    },
+    {
+        image: process.env.PUBLIC_URL + '/images/dragon.jpg',
+        active: false,
+        matched: false,
+    },
+    {
+        image: process.env.PUBLIC_URL + '/images/mango.jpg',
+        active: false,
+        matched: false,
+    },
+    {
+        image: process.env.PUBLIC_URL + '/images/orange.jpg',
+        active: false,
+        matched: false,
+    },
+    {
+        image: process.env.PUBLIC_URL + '/images/pineapple.jpg',
         active: false,
         matched: false,
     },
