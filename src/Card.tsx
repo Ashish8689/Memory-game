@@ -13,7 +13,7 @@ const Card: FC<CardComponent> = ({ data, changeCardVisibility, index }) => {
                 <img
                     alt="image"
                     className="front"
-                    src={process.env.PUBLIC_URL + '/images/joker.jpg'}
+                    src={process.env.PUBLIC_URL + '/images/front.jpg'}
                 />
                 <img alt="image" className="back" src={image} />
             </div>

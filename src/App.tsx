@@ -10,6 +10,30 @@ const App: FC = () => {
     const [playerName, setPlayerName] = useState<string>('Ashish')
     const [userScore, setUserScore] = useState<number>(0)
     const [remaningUserChances, setRemaningUserChances] = useState<number>(10)
+    const [timer, setTimer] = useState<number>(0)
+    const [timerId, setTimerId] = useState<number | null>(null);
+
+    useEffect(() => {
+        setCardList([...MEMORY_CARD_LIST].sort(() => 0.5 - Math.random()))
+    }, [])
+
+    const startGame = (): void => {
+        const newlist = [...cardList].map((list) => {
+            list.active = true
+
+            return list
+        })
+        setCardList(newlist)
+
+        setTimeout(() => {
+            const list = [...cardList].map((list) => {
+                list.active = false
+
+                return list
+            })
+            setCardList(list)
+        }, 2000)
+    }
 
     const updateData = (matched: boolean, newList: CardDetails[]): void => {
         setActiveCards([])
@@ -17,10 +41,6 @@ const App: FC = () => {
         setRemaningUserChances((prev) => prev - 1)
         matched && setUserScore((prev) => prev + 1)
     }
-
-    useEffect(() => {
-        setCardList([...MEMORY_CARD_LIST].sort(() => 0.5 - Math.random()))
-    }, [])
 
     useEffect(() => {
         if (activeCards.length === 2) {
@@ -69,6 +89,11 @@ const App: FC = () => {
                     <h1>Remaning Chances : </h1>
                     <h2>{remaningUserChances}</h2>
                 </div>
+            </div>
+
+            <div className="subHeader">
+                <h1 onClick={() => startGame()}>Start Game</h1>
+                <h1>{timer}</h1>
             </div>
 
             <div className="card-body-container">
