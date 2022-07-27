@@ -9,3 +9,7 @@ export interface CardComponent {
     data: CardDetails
     changeCardVisibility: (id: number, image: string) => void
 }
+
+export interface LocationState{
+    state: string;
+}

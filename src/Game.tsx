@@ -2,7 +2,8 @@ import { FC, useEffect, useState } from 'react'
 import './App.css'
 import Card from './Card'
 import { MEMORY_CARD_LIST } from './cardList'
-import { CardDetails } from './type'
+import { CardDetails, LocationState } from './type'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Game:FC = () => {
     const [cardList, setCardList] = useState<CardDetails[]>([])
@@ -10,10 +11,32 @@ const Game:FC = () => {
     const [userScore, setUserScore] = useState<number>(0)
     const [remaningUserChances, setRemaningUserChances] = useState<number>(10)
     const [ startDialogue, setStartDialogue] = useState<boolean>(true);
-    const [ endDialogue, setEndDialogue ] = useState<boolean>(false);
+    const [ endDialogue, setEndDialogue ] = useState<boolean>(true);
+    const location = useLocation();
+    const { state:userName } = location as LocationState;   
+    const navigate = useNavigate();
     
     useEffect(() => {
-        setCardList([...MEMORY_CARD_LIST].sort(() => 0.5 - Math.random()))
+        if(!userName){
+            navigate("/")
+        }
+    },[])
+
+    const shuffleCardList = (list:CardDetails[]):CardDetails[] => ([...list].sort(() => 0.5 - Math.random()))
+
+    const resetAllCards = ():CardDetails[] => {
+        const resetCardData =  [...cardList].map((list) => {
+            list.active = false
+            list.matched = false
+
+            return list
+        })
+
+        return shuffleCardList(resetCardData);
+    }
+    
+    useEffect(() => {
+        setCardList(shuffleCardList(MEMORY_CARD_LIST));
     }, [])
 
     const startGame = (): void => {
@@ -39,17 +62,18 @@ const Game:FC = () => {
         setRemaningUserChances(10);
         setStartDialogue(true);
         setEndDialogue(false)
+        setCardList(resetAllCards())
     }
 
     const updateData = (matched: boolean, newList: CardDetails[]): void => {
         setActiveCards([])
-        setCardList(newList)
         setRemaningUserChances((prev) => prev - 1)
+        setCardList(newList)
         matched && setUserScore((prev) => prev + 1)
     }
 
     useEffect(() =>{
-        if(userScore ===  cardList.length/2){
+        if( cardList.length &&  (userScore ===  cardList.length/2 || !remaningUserChances)){
             setEndDialogue(true);
         }
     })
@@ -69,7 +93,7 @@ const Game:FC = () => {
 
                     return card
                 })
-                updateData(matched, newList)
+                updateData(matched, newList);
             }, 500)
         }
     }, [activeCards, cardList])
@@ -89,7 +113,7 @@ const Game:FC = () => {
         <div className="header">
                 <div className="player">
                     <h1>Player : </h1>
-                        <h2>Ashish</h2>
+                        <h2>{userName}</h2>
                 </div>
 
                 <div className="score">
@@ -132,11 +156,19 @@ const Game:FC = () => {
 
 { endDialogue ? (
            <div className="startContainer">
-             <div className="startDialogue">
+             <div className="startDialogue endDialogue">
                 <h1>Game End!!!</h1>
                 <div className='score-container'>
-                    <p>Total Match : <span>{userScore}</span> </p>
-                    <p>Time Taken : <span>2 mins</span> </p>
+                    <table>
+                        <tr>
+                            <td colSpan={2}>Total Match : </td>
+                            <td className='score-value'>{userScore}</td>
+                        </tr>
+                        <tr>
+                            <td colSpan={2}>Chance Remaning : </td>
+                            <td className='score-value'>{remaningUserChances}</td>
+                        </tr>
+                    </table>
                 </div>
                 <h6 onClick={()=> restartGame()}>Restart Game</h6>
            </div>
