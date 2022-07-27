@@ -11,11 +11,9 @@ body {
     overflow: hidden;
 }
 
-
-
 /* *************   User Name   ************** */
 
-.userName-container{
+.userName-container {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -23,7 +21,7 @@ body {
     align-items: center;
 }
 
-.userName{
+.userName {
     width: 700px;
     border-radius: 60px;
     border: none;
@@ -33,20 +31,19 @@ body {
     font-weight: 700;
     background: #303a52;
     color: #f8f8f8;
-
 }
 
-.userName::placeholder{
+.userName::placeholder {
     color: #e3dfc8;
 }
 
-.userName-box-container{
+.userName-box-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.userSumbit{
+.userSumbit {
     margin-top: 40px;
     padding: 20px 80px;
     font-size: 20px;
@@ -54,38 +51,36 @@ body {
     border-radius: 40px;
     border: none;
     cursor: pointer;
-    transition: .3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
-.userSumbit:hover{
+.userSumbit:hover {
     background: #2d4059;
     color: whitesmoke;
 }
 
 /* ****************  userName end   *************** */
 
-
-
 /* ****************    Start Container   ***************** */
 
-.startContainer{
+.startContainer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0,0,0,.7);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.startDialogue{
+.startDialogue {
     padding: 20px;
     width: 500px;
     height: 300px;
     background: #3d6cb9;
-     display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -94,43 +89,43 @@ body {
     border-radius: 20px;
 }
 
-.startDialogue h1{
+.startDialogue h1 {
     font-size: 22px;
     color: #e2ded3;
     font-weight: 700;
 }
 
-.startDialogue h6{
+.startDialogue h6 {
     margin-top: 20px;
     padding: 14px 40px;
-    background: rgba(0,0,0,.7);
+    background: rgba(0, 0, 0, 0.7);
     border-radius: 40px;
     font-size: 20px;
     color: #e2ded3;
     cursor: pointer;
-    transition: .3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
-.startDialogue h6:hover{
-    background: rgba(0,0,0,.4);
+.startDialogue h6:hover {
+    background: rgba(0, 0, 0, 0.4);
 }
 
-.endDialogue h1{
+.endDialogue h1 {
     font-size: 40px;
     padding-bottom: 20px;
 }
 
-.endDialogue .score-container td{
+.endDialogue .score-container td {
     font-size: 18px;
     font-weight: 600;
     color: #e4fcf9;
     text-align: left;
 }
-.endDialogue .score-container .score-value{
-  text-align: right;
+.endDialogue .score-container .score-value {
+    text-align: right;
 }
 
-.endDialogue table{
+.endDialogue table {
     width: 200px;
 }
 

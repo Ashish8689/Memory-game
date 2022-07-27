@@ -5,38 +5,39 @@ import { MEMORY_CARD_LIST } from './cardList'
 import { CardDetails, LocationState } from './type'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const Game:FC = () => {
+const Game: FC = () => {
     const [cardList, setCardList] = useState<CardDetails[]>([])
     const [activeCards, setActiveCards] = useState<string[]>([])
     const [userScore, setUserScore] = useState<number>(0)
     const [remaningUserChances, setRemaningUserChances] = useState<number>(10)
-    const [ startDialogue, setStartDialogue] = useState<boolean>(true);
-    const [ endDialogue, setEndDialogue ] = useState<boolean>(true);
-    const location = useLocation();
-    const { state:userName } = location as LocationState;   
-    const navigate = useNavigate();
-    
+    const [startDialogue, setStartDialogue] = useState<boolean>(true)
+    const [endDialogue, setEndDialogue] = useState<boolean>(false)
+    const location = useLocation()
+    const { state: userName } = location as LocationState
+    const navigate = useNavigate()
+
     useEffect(() => {
-        if(!userName){
-            navigate("/")
+        if (!userName) {
+            navigate('/')
         }
-    },[])
+    }, [])
 
-    const shuffleCardList = (list:CardDetails[]):CardDetails[] => ([...list].sort(() => 0.5 - Math.random()))
+    const shuffleCardList = (list: CardDetails[]): CardDetails[] =>
+        [...list].sort(() => 0.5 - Math.random())
 
-    const resetAllCards = ():CardDetails[] => {
-        const resetCardData =  [...cardList].map((list) => {
+    const resetAllCards = (): CardDetails[] => {
+        const resetCardData = [...cardList].map((list) => {
             list.active = false
             list.matched = false
 
             return list
         })
 
-        return shuffleCardList(resetCardData);
+        return shuffleCardList(resetCardData)
     }
-    
+
     useEffect(() => {
-        setCardList(shuffleCardList(MEMORY_CARD_LIST));
+        setCardList(shuffleCardList(MEMORY_CARD_LIST))
     }, [])
 
     const startGame = (): void => {
@@ -57,10 +58,10 @@ const Game:FC = () => {
         }, 2000)
     }
 
-    const restartGame = ():void =>{
-        setUserScore(0);
-        setRemaningUserChances(10);
-        setStartDialogue(true);
+    const restartGame = (): void => {
+        setUserScore(0)
+        setRemaningUserChances(10)
+        setStartDialogue(true)
         setEndDialogue(false)
         setCardList(resetAllCards())
     }
@@ -72,9 +73,12 @@ const Game:FC = () => {
         matched && setUserScore((prev) => prev + 1)
     }
 
-    useEffect(() =>{
-        if( cardList.length &&  (userScore ===  cardList.length/2 || !remaningUserChances)){
-            setEndDialogue(true);
+    useEffect(() => {
+        if (
+            cardList.length &&
+            (userScore === cardList.length / 2 || !remaningUserChances)
+        ) {
+            setEndDialogue(true)
         }
     })
 
@@ -93,7 +97,7 @@ const Game:FC = () => {
 
                     return card
                 })
-                updateData(matched, newList);
+                updateData(matched, newList)
             }, 500)
         }
     }, [activeCards, cardList])
@@ -108,12 +112,12 @@ const Game:FC = () => {
         setActiveCards((prev) => [...prev, image])
     }
 
-  return (
-    <div className='app'>
-        <div className="header">
+    return (
+        <div className="app">
+            <div className="header">
                 <div className="player">
                     <h1>Player : </h1>
-                        <h2>{userName}</h2>
+                    <h2>{userName}</h2>
                 </div>
 
                 <div className="score">
@@ -140,42 +144,53 @@ const Game:FC = () => {
                 </div>
             </div>
 
-       
-       { startDialogue ? (
-           <div className="startContainer">
-             <div className="startDialogue">
-                <h1>Once you click on start button you will get 3s to see the card for memorising it.</h1>
-                <h6 onClick={()=> {
-                    setStartDialogue(false)
-                    startGame()
-                }}>Start Now</h6>
-           </div>
-           </div>
-       ) : ''} 
-
-
-{ endDialogue ? (
-           <div className="startContainer">
-             <div className="startDialogue endDialogue">
-                <h1>Game End!!!</h1>
-                <div className='score-container'>
-                    <table>
-                        <tr>
-                            <td colSpan={2}>Total Match : </td>
-                            <td className='score-value'>{userScore}</td>
-                        </tr>
-                        <tr>
-                            <td colSpan={2}>Chance Remaning : </td>
-                            <td className='score-value'>{remaningUserChances}</td>
-                        </tr>
-                    </table>
+            {startDialogue ? (
+                <div className="startContainer">
+                    <div className="startDialogue">
+                        <h1>
+                            Once you click on start button you will get 3s to
+                            see the card for memorising it.
+                        </h1>
+                        <h6
+                            onClick={() => {
+                                setStartDialogue(false)
+                                startGame()
+                            }}
+                        >
+                            Start Now
+                        </h6>
+                    </div>
                 </div>
-                <h6 onClick={()=> restartGame()}>Restart Game</h6>
-           </div>
-           </div>
-       ) : ''} 
-    </div>
-  )
+            ) : (
+                ''
+            )}
+
+            {endDialogue ? (
+                <div className="startContainer">
+                    <div className="startDialogue endDialogue">
+                        <h1>Game End!!!</h1>
+                        <div className="score-container">
+                            <table>
+                                <tr>
+                                    <td colSpan={2}>Total Match : </td>
+                                    <td className="score-value">{userScore}</td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={2}>Chance Remaning : </td>
+                                    <td className="score-value">
+                                        {remaningUserChances}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h6 onClick={() => restartGame()}>Restart Game</h6>
+                    </div>
+                </div>
+            ) : (
+                ''
+            )}
+        </div>
+    )
 }
 
 export default Game

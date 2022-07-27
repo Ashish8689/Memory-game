@@ -10,6 +10,6 @@ export interface CardComponent {
     changeCardVisibility: (id: number, image: string) => void
 }
 
-export interface LocationState{
-    state: string;
+export interface LocationState {
+    state: string
 }
